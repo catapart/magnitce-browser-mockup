@@ -1,0 +1,23 @@
+<header part="header">
+    <span part="tabs">
+        <slot name="tab"></slot>
+    </span>       
+    <span part="actions">
+        <span part="action-minimize"></span>
+        <span part="action-maximize"></span>
+        <span part="action-close"></span>
+    </span>
+    <div part="navigation">
+        <span part="history">
+            <span part="button-back">➜</span>
+            <span part="button-forward">➜</span>
+            <span part="button-refresh">↻</span>
+        </span>
+        <span part="url">
+            <span part="path">https://www.mywebsite.com</span>
+        </span>
+    </div>
+</header>
+<div part="body">
+    <slot></slot>
+</div>

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Browser Mockup Demo</title>
+
+    <style>
+        html
+        {
+            color-scheme: light dark;
+        }
+
+        .row
+        ,.container
+        {
+            display: flex;
+            gap: 1em;
+        }
+        .row > *
+        ,.container > *
+        {
+            flex: 1;
+        }
+
+        .container
+        {
+            display: flex;
+            flex-direction: column;
+        }
+        browser-mockup:has(browser-mockup)::part(body)
+        {
+            display: grid;
+            grid-template-rows: auto auto 1fr;
+            grid-template-columns: 1fr 1fr;
+        }
+        browser-mockup :not(browser-mockup)
+        {
+            grid-column: span 2;
+        }
+        browser-mockup browser-mockup
+        {
+            grid-row: 3;
+        }
+    </style>
+</head>
+<body>
+    <div class="row">
+        <browser-mockup>
+            <h1>Default Example</h1>
+            <p>Any child html (that is not assigned a slot) will be rendered inside the mockup document.</p>
+            <p>Assign an element's slot attribute to "tab" to render that child as a tab element.</p>
+            <p>If a child element is assigned to the tab slot, and has a class of "selected" that tab will appear selected. If no tab has a "selected" class, the first tab will be assigned that class.</p>
+        </browser-mockup>
+        <browser-mockup url="http://www.my-custom-url.com/any/string">
+            <h1>Custom URL</h1>
+            <p>Use the url attribute to set the path in the mockup.</p>
+        </browser-mockup>
+    </div>
+    <div class="row">
+        <browser-mockup tabs="2" collapsed-tabs="3" url="https://shop.mydomain.com" class="windows simple">
+            <span slot="tab" data-label="My Domain - Shop"></span>
+            <h1>Simple Customization Example</h1>
+            <dl>
+                <dt>"tabs" attribute set to 2:</dt>
+                <dd>Two random tabs, with labels</dd>
+                <dt>"collapsed-tabs" attribute set to 3:</dt>
+                <dd>Three random collapsed tabs, showing only icons</dd>
+                <dt>"url" attribute set to "https://shop.mydomain.com":</dt>
+                <dd>The mockup url is set to "https://shop.mydomain.com"</dd>
+                <dt>"windows" class added to element's "class" attribute:</dt>
+                <dd>Mockup winform controls added to the top right.</dd>
+                <dt>A child element with the "slot" attribute set to tab:</dt>
+                <dd>That child element added to the mockup tabs.</dd>
+                <dt>The custom tab element has a "data-label" attribute set to "My Domain - Shop":</dt>
+                <dd>The mockup tab's label is set to "My Domain - Shop".</dd>
+                <dt>The custom tab element does not have a "data-icon" attribute set:</dt>
+                <dd>A random icon is assigned to the tab on each page load.</dd>
+                <dt>There is a custom tab element child, and no child elements have a "selected" class assigned to them:</dt>
+                <dd>The first tab (the custom tab element) is marked as selected.</dd>
+            </dl>
+        </browser-mockup>
+        <browser-mockup>
+            <h1>Nesting</h1>
+            <p>`&lt;browser-window&gt;` elements can be nested.</p>
+            <browser-mockup class="windows">
+                <h1>Windows Controls</h1>
+                <p>Add a class of 'windows' to add mockup form buttons from that operating system.</p>
+            </browser-mockup>
+            <browser-mockup class="macos">
+                <h1>MacOS Controls</h1>
+                <p>Add a class of 'macos' to add mockup form buttons from that operating system.</p>
+            </browser-mockup>
+        </browser-mockup>
+    </div>
+    <div class="row">
+    </div>
+    <div class="row">
+        <browser-mockup tabs="3" collapsed-tabs="5">
+            <h1>Random Tabs</h1>
+            <p>Using the tabs and collapsed-tabs attributes injects randomly generated tabs into the mockup.</p>
+            <dl>
+                <dt>Uses a random icon from a small set of unicode characters:</dt>
+                <dd>♔♕♖♗♘♙♚♛♜♝♞♟♠♣♥♦♡♢♤♧</dd>
+                <dt>Uses a random label from a short list of nonsense words:</dt>
+                <dd>Tabbr</dd>
+                <dd>Browsr</dd>
+                <dd>Demor</dd>
+                <dd>Mockr</dd>
+                <dd>Presentr</dd>
+                <dd>Showcasr</dd>
+                <dd>Samplr</dd>
+                <dd>Playr</dd>
+                <dd>Chessr</dd>
+                <dd>Suitr</dd>
+            </dl>
+        </browser-mockup>
+        <browser-mockup tabs="1" collapsed-tabs="2">
+            <h1>Custom Tabs</h1>
+            <p>Set the slot attribute on child elements to "tab".</p>
+            <ul>
+                <li>Set the child elements, explicitly for a fully custom tab.</li>
+                <li>Use the data-icon attribute to create a collapsed tab with a custom icon.</li>
+                <li>Use the data-label attribute to create a tab with a custom label and a random icon.</li>
+                <li>Use both of the data-icon and data-label attributes to create a tab with a custom label and a custom icon.</li>
+                <li>Tabs are ordered as:
+                    <ol>
+                        <li>Fully Custom Tabs</li>
+                        <li>Random Tabs</li>
+                        <li>Custom Collapsed Tabs</li>
+                        <li>Random Collapsed Tabs</li>
+                    </ol>
+                </li>
+            </ul>
+            <span slot="tab" class="selected">
+                <span class="icon">&check;</span>
+                <span class="label">Fully Custom Tab</span>
+            </span>
+            <span slot="tab" data-icon="Ω"></span>
+            <span slot="tab" data-label="Omega"></span>
+            <span slot="tab" data-icon="α" data-label="Alpha"></span>
+        </browser-mockup>
+    </div>
+    <script type="module" src="../dist/browser-mockup.js"></script>
+</body>
+</html>

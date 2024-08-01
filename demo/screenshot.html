@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Browser Mockup - Screenshot Utility</title>
+
+    <style>
+        html
+        {
+            color-scheme: light dark;
+        }
+
+        body
+        {
+            height: 100dvh;
+            display: grid;
+            grid-template-rows: auto auto 1fr;
+            grid-template-columns: auto 1fr;
+            gap: 1em;
+        }
+
+        #description
+        ,h1
+        {
+            grid-column: span 2;
+        }
+
+        .background
+        {
+            overflow: hidden;
+            perspective: 1000px;
+        }
+
+        #wikipedia
+        {
+            text-decoration: underline;
+            cursor: pointer;
+        }
+
+        browser-mockup
+        {
+            width: 1000px;
+            margin: 0 auto;
+        }
+
+        browser-mockup::part(body)
+        {
+            display: flex;
+            margin: 0;
+        }
+
+        iframe
+        {
+            flex: 1;
+            border: none;
+        }
+
+        .form-field
+        {
+            display: grid;
+            grid-template-rows: auto 1fr;
+        }
+
+        #controls
+        {
+            display: flex;
+            gap: 1em;
+        }
+
+        .sources
+        {
+            display: flex;
+            flex-direction: column;
+            gap: 1em;
+        }
+        
+        .textareas
+        {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: auto 1fr;
+            gap: 1em;
+        }
+        .textareas > label
+        {
+            grid-column: span 2;
+        }
+        .textareas .form-field 
+        {
+            min-width: 300px;
+        }
+        textarea
+        {
+            min-height: 400px;
+            white-space: nowrap;
+        }
+    </style>
+</head>
+<body>
+    <h1>&lt;browser-mockup&gt; - Screenshot Utility</h1>
+    <div id="description">
+        <p>This utility renders a public website, or any custom HTML into a browser mockup, and sets its display properties based on the controls below.</p>
+        <ul>
+            <li>Enter a url to load that url into an iframe on the mockup (example: <a id="wikipedia">https://www.wikipedia.org/</a>).</li>
+            <li>Render and style content directly, using the HTML and CSS inputs.</li>
+            <li>Set the controls and then use F11 to enter fullscreen mode.</li>
+            <li>Begin or restart animations by pressing spacebar.</li>
+            <li>Take a snapshot by pressing the print screen key.</li>
+            <li>To record an animation, use screen recording software like <a href="https://obsproject.com/" target="_blank">OBS</a>.</li>
+            <li>Style the background by using the ".background" selector.</li>
+        </ul>
+    </div>
+    <div id="controls">
+        <div class="sources">
+            <span class="form-field">
+                <label class="label">
+                    <input type="radio" name="content" value="url" id="url-content" />
+                    <span class="title">URL</span>
+                </label>
+                <input type="text" id="url" />
+            </span>
+            <div class="textareas">
+                <label>
+                    <input type="radio" name="content" value="inputs" id="inputs-content" checked="true" />
+                    <span class="title">Direct Content</span>
+                </label>
+                <span class="form-field">
+                    <span class="label">HTML</span>
+                    <textarea id="html" class="value">
+<main>
+    <h1>Default Example</h1>
+    <p>Any child html (that is not assigned a slot) will be rendered inside the mockup document.</p>
+    <p>Assign an element's slot attribute to "tab" to render that child as a tab element.</p>
+    <p>If a child element is assigned to the tab slot, and has a class of "selected" that tab will appear selected. If no tab has a "selected" class, the first tab will be assigned that class.</p>
+</main>
+                    </textarea>
+                </span>
+                <span class="form-field">
+                    <span class="label">CSS</span>
+                    <textarea id="css" class="value">
+.background
+{
+    display: flex;
+    background-image: linear-gradient(-225deg, #FF3CAC 0%, #562B7C 52%, #2B86C5 100%);
+    padding: 5em 3em;
+}
+browser-mockup::part(body)
+{
+    padding: .5em;
+}
+main
+{
+    font-family: sans-serif;
+}
+                    </textarea>
+                </span>
+            </div>
+        </div>
+        <div class="display">
+            <span class="form-field">
+                <span class="label">Tab Title</span>
+                <input type="text" id="title" value="Example" />
+            </span>
+            <span class="form-field">
+                <span class="label">Tab Icon</span>
+                <select id="icon">
+                    <option value="♔">♔</option>
+                    <option value="♕">♕</option>
+                    <option value="♖">♖</option>
+                    <option value="♗">♗</option>
+                    <option value="♘">♘</option>
+                    <option value="♙">♙</option>
+                    <option value="♚">♚</option>
+                    <option value="♛">♛</option>
+                    <option value="♜">♜</option>
+                    <option value="♝">♝</option>
+                    <option value="♞">♞</option>
+                    <option value="♟">♟</option>
+                    <option value="♠">♠</option>
+                    <option value="♣">♣</option>
+                    <option value="♥">♥</option>
+                    <option value="♦">♦</option>
+                    <option value="♡">♡</option>
+                    <option value="♢">♢</option>
+                    <option value="♤">♤</option>
+                    <option value="♧">♧</option>
+                </select>
+            </span>
+            <span class="form-field">
+                <span class="label">Tilt X</span>
+                <input type="range" id="tilt-x" value="0" min="-90" max="90" step=".25" />
+                <button type="button" id="reset-x">Reset</button>
+            </span>
+            <span class="form-field">
+                <span class="label">Tilt Y</span>
+                <input type="range" id="tilt-y" value="0" min="-90" max="90" step=".25" />
+                <button type="button" id="reset-y">Reset</button>
+            </span>
+            <span class="form-field">
+                <span class="label">Tilt Z</span>
+                <input type="range" id="tilt-z" value="0" min="-90" max="90" step=".25" />
+                <button type="button" id="reset-z">Reset</button>
+            </span>
+            <span class="form-field">
+                <span class="label">Scale</span>
+                <input type="range" id="scale" value="1" min=".75" max="3" step=".01" />
+                <button type="button" id="reset-scale">Reset</button>
+            </span>
+            <span class="form-field">
+                <span class="label">Actions</span>
+                <label>
+                    <input type="radio" id="actions-none" name="actions" value="" checked="true" />
+                    <span class="label">None</span>
+                </label>
+                <label>
+                    <input type="radio" id="actions-windows" name="actions" value="windows" />
+                    <span class="label">Windows</span>
+                </label>
+                <label>
+                    <input type="radio" id="actions-macos" name="actions" value="macos" />
+                    <span class="label">MacOS</span>
+                </label>
+            </span>
+        </div>
+    </div>
+    <div class="background">
+        <browser-mockup></browser-mockup>
+    </div>
+    <script type="module" src="../dist/browser-mockup.js"></script>
+    <script type="module">
+        const urlContentInput = document.getElementById('url-content');
+        const inputsContentInput = document.getElementById('inputs-content');
+        const tabTitleInput = document.getElementById('title');
+        const tabIconSelect = document.getElementById('icon');
+        const urlInput = document.getElementById('url');
+        const htmlInput = document.getElementById('html');
+        const cssInput = document.getElementById('css');
+        const tiltXInput = document.getElementById('tilt-x');
+        const resetX = document.getElementById('reset-x');
+        const tiltYInput = document.getElementById('tilt-y');
+        const resetY = document.getElementById('reset-y');
+        const tiltZInput = document.getElementById('tilt-z');
+        const resetZ = document.getElementById('reset-z');
+        const scaleInput = document.getElementById('scale');
+        const resetScale = document.getElementById('reset-scale');
+        const layout = document.querySelector('.background');
+        const browserMockup = document.querySelector('browser-mockup');
+        const wikipediaAnchor = document.getElementById('wikipedia');
+        const actions_NoneInput = document.getElementById('actions-none');
+        const actions_WindowsInput = document.getElementById('actions-windows');
+        const actions_MacOSInput = document.getElementById('actions-macos');
+
+        urlContentInput.addEventListener('change', onChange);
+        inputsContentInput.addEventListener('change', onChange);
+        tabTitleInput.addEventListener('input', onChange);
+        tabIconSelect.addEventListener('change', onChange);
+        urlInput.addEventListener('change', setUrl);
+        htmlInput.addEventListener('change', onChange);
+        cssInput.addEventListener('change', onChange);
+        tiltXInput.addEventListener('input', onChange);
+        tiltYInput.addEventListener('input', onChange);
+        tiltZInput.addEventListener('input', onChange);
+        scaleInput.addEventListener('input', onChange);
+        resetX.addEventListener('click', () => { tiltXInput.value = 0; onChange(); });
+        resetY.addEventListener('click', () => { tiltYInput.value = 0; onChange(); });
+        resetZ.addEventListener('click', () => { tiltZInput.value = 0; onChange(); });
+        resetScale.addEventListener('click', () => { resetScale.value = 1; onChange(); });
+        wikipediaAnchor.addEventListener('click', () => { urlInput.value = wikipediaAnchor.textContent; tabTitleInput.value = "Wikipedia"; urlContentInput.checked = true; setUrl(); });
+        actions_NoneInput.addEventListener('input', onChange);
+        actions_WindowsInput.addEventListener('input', onChange);
+        actions_MacOSInput.addEventListener('input', onChange);
+
+        function setUrl()
+        {
+            browserMockup.setAttribute('url', urlInput.value);
+            browserMockup.innerHTML = `<iframe src="${url.value}" />`;
+            
+            const tab = document.createElement('span');
+            tab.setAttribute('slot', 'tab');
+            tab.dataset.label = tabTitleInput.value;
+            tab.dataset.icon = tabIconSelect.value;
+            browserMockup.append(tab);
+
+            stylesheet.replaceSync(cssInput.value);
+            stylesheet.insertRule(`browser-mockup
+            {
+                transform: rotateX(${tiltXInput.value}deg) rotateY(${tiltYInput.value}deg) rotateZ(${tiltZInput.value}deg) scale(${scaleInput.value});
+            }`);
+        }
+
+        function onChange()
+        {
+            update();
+        }
+        
+        function update()
+        {
+            if(inputsContentInput.checked == true)
+            {
+                browserMockup.innerHTML = htmlInput.value;
+                const tab = document.createElement('span');
+                tab.setAttribute('slot', 'tab');
+                tab.dataset.label = tabTitleInput.value;
+                tab.dataset.icon = tabIconSelect.value;
+                browserMockup.append(tab);
+            }
+
+
+            stylesheet.replaceSync(cssInput.value);
+            stylesheet.insertRule(`browser-mockup
+            {
+                transform: rotateX(${tiltXInput.value}deg) rotateY(${tiltYInput.value}deg) rotateZ(${tiltZInput.value}deg) scale(${scaleInput.value});
+            }`);
+
+            if(actions_WindowsInput.checked == true)
+            {
+                browserMockup.classList.add('windows');
+            }
+            else
+            {
+                browserMockup.classList.remove('windows');
+            }
+            if(actions_MacOSInput.checked == true)
+            {
+                browserMockup.classList.add('macos');
+            }
+            else
+            {
+                browserMockup.classList.remove('macos');
+            }
+
+        }
+        const stylesheet = new CSSStyleSheet();
+        document.adoptedStyleSheets.push(stylesheet);
+
+        update();
+
+        // target fullscreen to layout instead of full document
+        document.addEventListener("keydown", function(e) 
+        {
+            // if code is F11 and document is fullscreen, then request, else cancel
+            if(e.code == "F11") { !document.fullscreenElement && layout.requestFullscreen() || layout.cancelFullScreen(); }
+        });
+    </script>
+</body>
+</html>
