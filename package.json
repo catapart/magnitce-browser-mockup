@@ -13,7 +13,7 @@
     "build": "tsup browser-mockup.ts --format cjs,esm --dts --clean",
     "build-vanilla": "tsup browser-mockup.ts --format esm --dts --clean --outDir ./vanilla",
     "minify": "tsup browser-mockup.ts --format esm --config ./tsup.config.min.ts --outDir ./vanilla --minify",
-    "lint": "tsc",
+    "lint": "tsup browser-mockup.ts --format esm --tsconfig ./tsconfig.lint.json",
     "package": "npm run build && npm run build-vanilla && npm run minify",
     "release": "npm run package && changeset publish"
   },
