@@ -3,9 +3,9 @@
   "version": "0.0.1",
   "description": "A custom html element that adds browser chrome around its content to simulate the appearance of a browser in a document.",
   "type": "module",
-  "main": "dist/path-router.js",
-  "module": "dist/path-router.mjs",
-  "types": "dist/path-router.d.ts",
+  "main": "dist/browser-mockup.js",
+  "module": "dist/browser-mockup.mjs",
+  "types": "dist/browser-mockup.d.ts",
   "files": [
     "dist"
   ],

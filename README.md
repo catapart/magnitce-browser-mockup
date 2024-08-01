@@ -18,6 +18,29 @@ https://catapart.github.io/magnitce-browser-mockup/demo/
 - Edge
 - <s>Safari</s> (Has not been tested; should be supported, based on custom element support)
 
+### Reference/Install
+#### HTML Import
+```html
+<script type="module" src="/path/to/browser-mockup[.min].js"></script>
+```
+#### npm
+```cmd
+npm install @magnit-ce/browser-mockup
+```
+
+### Import
+#### Vanilla js/ts
+```js
+import "/path/to/browser-mockup[.min].js"; // if you didn't reference from a <script>, reference with an import like this
+
+import { PathRouter } from "/path/to/browser-mockup[.min].js";
+```
+#### npm
+```js
+import "@magnit-ce/browser-mockup"; // if you didn't reference from a <script>, reference with an import like this
+
+import { PathRouter } from "@magnit-ce/browser-mockup";
+```
 
 ## Screenshot Utility
 Load a webpage, or raw html/css into a browser mockup in the screenshot demo:  
