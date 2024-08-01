@@ -19,6 +19,10 @@ To run the demo, yourself, run the `package` script (`npm run pacakge`) before s
 - <s>Safari</s> (Has not been tested; should be supported, based on custom element support)
 
 
+## Screenshot Utility
+Load a webpage, or raw html/css into a browser mockup in the screenshot demo:  
+https://catapart.github.io/magnitce-browser-mockup/demo/screenshot.html
+
 
 
 ## License
