@@ -117,10 +117,6 @@
     {
         transform: scaleX(-1);
     }
-    [part="history"] [part="button-forward"]
-    {
-        
-    }
     [part="history"] [part="button-refresh"]
     {
         rotate: 100deg;

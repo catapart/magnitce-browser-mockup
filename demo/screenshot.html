@@ -33,6 +33,7 @@
         }
 
         #wikipedia
+        ,#google
         {
             text-decoration: underline;
             cursor: pointer;
@@ -102,7 +103,7 @@
     <div id="description">
         <p>This utility renders a public website, or any custom HTML into a browser mockup, and sets its display properties based on the controls below.</p>
         <ul>
-            <li>Enter a url to load that url into an iframe on the mockup (example: <a id="wikipedia">https://www.wikipedia.org/</a>).</li>
+            <li>Enter a url to load that url into an iframe on the mockup (page must be CORS compliant) [examples: <a id="wikipedia">https://www.wikipedia.org/</a>, <a id="google">https://www.google.com?igu=1</a>].</li>
             <li>Render and style content directly, using the HTML and CSS inputs.</li>
             <li>Set the controls and then use F11 to enter fullscreen mode.</li>
             <li>Begin or restart animations by pressing spacebar.</li>
@@ -122,7 +123,7 @@
             </span>
             <div class="textareas">
                 <label>
-                    <input type="radio" name="content" value="inputs" id="inputs-content" checked="true" />
+                    <input type="radio" name="content" value="inputs" id="inputs-content" checked />
                     <span class="title">Direct Content</span>
                 </label>
                 <span class="form-field">
@@ -145,6 +146,20 @@
     background-image: linear-gradient(-225deg, #FF3CAC 0%, #562B7C 52%, #2B86C5 100%);
     padding: 5em 3em;
 }
+
+browser-mockup
+{
+}
+browser-mockup.animate
+{
+    animation: browser-animation 2s ease-out;
+}
+@keyframes browser-animation
+{
+    0% { translate: 0 20%; opacity: 0; }
+    100% { translate: 0 0; opacity: 1; }
+}
+
 browser-mockup::part(body)
 {
     padding: .5em;
@@ -187,25 +202,36 @@ main
                     <option value="♧">♧</option>
                 </select>
             </span>
+            <label class="form-field">
+                <span class="label">Mock URL</span>
+                <input type="text" id="mock-url" value="https://www.mywebsite.com" />
+            </label>
             <span class="form-field">
                 <span class="label">Tilt X</span>
-                <input type="range" id="tilt-x" value="0" min="-90" max="90" step=".25" />
+                <input type="range" id="tilt-x" value="0" min="-90" max="90" step="1" />
                 <button type="button" id="reset-x">Reset</button>
             </span>
             <span class="form-field">
                 <span class="label">Tilt Y</span>
-                <input type="range" id="tilt-y" value="0" min="-90" max="90" step=".25" />
+                <input type="range" id="tilt-y" value="0" min="-90" max="90" step="1" />
                 <button type="button" id="reset-y">Reset</button>
             </span>
             <span class="form-field">
                 <span class="label">Tilt Z</span>
-                <input type="range" id="tilt-z" value="0" min="-90" max="90" step=".25" />
+                <input type="range" id="tilt-z" value="0" min="-180" max="180" step="1" />
                 <button type="button" id="reset-z">Reset</button>
             </span>
             <span class="form-field">
                 <span class="label">Scale</span>
-                <input type="range" id="scale" value="1" min=".75" max="3" step=".01" />
+                <input type="range" id="scale" value="1" min=".5" max="3" step=".1" />
                 <button type="button" id="reset-scale">Reset</button>
+            </span>
+            <span class="form-field">
+                <span class="label">Position</span>
+                <span class="title">X</span><input type="range" id="x" value="1" min="-1000" max="1000" step="1" />
+                <span class="title">Y</span><input type="range" id="y" value="1" min="-1000" max="1000" step="1" />
+                <span class="title">Z</span><input type="range" id="z" value="1" min="-1000" max="1000" step="1" />
+                <button type="button" id="reset-position">Reset</button>
             </span>
             <span class="form-field">
                 <span class="label">Actions</span>
@@ -234,6 +260,7 @@ main
         const tabTitleInput = document.getElementById('title');
         const tabIconSelect = document.getElementById('icon');
         const urlInput = document.getElementById('url');
+        const mockUrlInput = document.getElementById('mock-url');
         const htmlInput = document.getElementById('html');
         const cssInput = document.getElementById('css');
         const tiltXInput = document.getElementById('tilt-x');
@@ -244,74 +271,122 @@ main
         const resetZ = document.getElementById('reset-z');
         const scaleInput = document.getElementById('scale');
         const resetScale = document.getElementById('reset-scale');
+        const xPositionInput = document.getElementById('x');
+        const yPositionInput = document.getElementById('y');
+        const zPositionInput = document.getElementById('z');
+        const resetPosition = document.getElementById('reset-position');
         const layout = document.querySelector('.background');
         const browserMockup = document.querySelector('browser-mockup');
         const wikipediaAnchor = document.getElementById('wikipedia');
+        const googleAnchor = document.getElementById('google');
         const actions_NoneInput = document.getElementById('actions-none');
         const actions_WindowsInput = document.getElementById('actions-windows');
         const actions_MacOSInput = document.getElementById('actions-macos');
 
-        urlContentInput.addEventListener('change', onChange);
-        inputsContentInput.addEventListener('change', onChange);
-        tabTitleInput.addEventListener('input', onChange);
-        tabIconSelect.addEventListener('change', onChange);
+        urlContentInput.addEventListener('change', updateDisplay);
+        inputsContentInput.addEventListener('change', updateDisplay);
+        tabTitleInput.addEventListener('input', setBodyContent);
+        tabIconSelect.addEventListener('change', setBodyContent);
         urlInput.addEventListener('change', setUrl);
-        htmlInput.addEventListener('change', onChange);
-        cssInput.addEventListener('change', onChange);
-        tiltXInput.addEventListener('input', onChange);
-        tiltYInput.addEventListener('input', onChange);
-        tiltZInput.addEventListener('input', onChange);
-        scaleInput.addEventListener('input', onChange);
-        resetX.addEventListener('click', () => { tiltXInput.value = 0; onChange(); });
-        resetY.addEventListener('click', () => { tiltYInput.value = 0; onChange(); });
-        resetZ.addEventListener('click', () => { tiltZInput.value = 0; onChange(); });
-        resetScale.addEventListener('click', () => { resetScale.value = 1; onChange(); });
+        mockUrlInput.addEventListener('change', setMockUrl);
+        htmlInput.addEventListener('change', setBodyContent);
+        cssInput.addEventListener('change', setBodyContent);
+        tiltXInput.addEventListener('input', updateDisplay);
+        tiltYInput.addEventListener('input', updateDisplay);
+        tiltZInput.addEventListener('input', updateDisplay);
+        scaleInput.addEventListener('input', updateDisplay);
+        xPositionInput.addEventListener('input', updateDisplay);
+        yPositionInput.addEventListener('input', updateDisplay);
+        zPositionInput.addEventListener('input', updateDisplay);
+        resetX.addEventListener('click', () => { tiltXInput.value = 0; updateDisplay(); });
+        resetY.addEventListener('click', () => { tiltYInput.value = 0; updateDisplay(); });
+        resetZ.addEventListener('click', () => { tiltZInput.value = 0; updateDisplay(); });
+        resetScale.addEventListener('click', () => { scaleInput.value = 1; updateDisplay(); });
+        resetPosition.addEventListener('click', () => { xPositionInput.value = 0; yPositionInput.value = 0; zPositionInput.value = 0; updateDisplay(); });
         wikipediaAnchor.addEventListener('click', () => { urlInput.value = wikipediaAnchor.textContent; tabTitleInput.value = "Wikipedia"; urlContentInput.checked = true; setUrl(); });
-        actions_NoneInput.addEventListener('input', onChange);
-        actions_WindowsInput.addEventListener('input', onChange);
-        actions_MacOSInput.addEventListener('input', onChange);
+        googleAnchor.addEventListener('click', () => { urlInput.value = googleAnchor.textContent; tabTitleInput.value = "Google"; urlContentInput.checked = true; setUrl(); });
+        actions_NoneInput.addEventListener('input', updateDisplay);
+        actions_WindowsInput.addEventListener('input', updateDisplay);
+        actions_MacOSInput.addEventListener('input', updateDisplay);
+
+        
+        const tab = document.createElement('span');
+        tab.dataset.icon = tabIconSelect.value;
+        tab.dataset.label = tabTitleInput.value;
+        tab.setAttribute('slot', 'tab');
+
+        const stylesheet = new CSSStyleSheet();
+        document.adoptedStyleSheets.push(stylesheet);
+
+        setBodyContent();
+        browserMockup.classList.add('animate');
 
         function setUrl()
         {
+            if(urlContentInput.checked == false)
+            {
+                return;
+            }
+
             browserMockup.setAttribute('url', urlInput.value);
             browserMockup.innerHTML = `<iframe src="${url.value}" />`;
             
-            const tab = document.createElement('span');
-            tab.setAttribute('slot', 'tab');
-            tab.dataset.label = tabTitleInput.value;
-            tab.dataset.icon = tabIconSelect.value;
-            browserMockup.append(tab);
+            if(tab.children[1] != null)
+            {
+                tab.children[1].textContent = tabTitleInput.value;
+            }
+            if(tab.children[0] != null)
+            {
+                tab.children[0].textContent = tabIconSelect.value;
+            }
+            browserMockup.prepend(tab);
 
             stylesheet.replaceSync(cssInput.value);
             stylesheet.insertRule(`browser-mockup
             {
-                transform: rotateX(${tiltXInput.value}deg) rotateY(${tiltYInput.value}deg) rotateZ(${tiltZInput.value}deg) scale(${scaleInput.value});
+                transform: rotateX(${tiltXInput.value}deg) rotateY(${tiltYInput.value}deg) rotateZ(${tiltZInput.value}deg) scale(${scaleInput.value})
+                translateX(${xPositionInput.value}px) translateY(${yPositionInput.value}px) translateZ(${zPositionInput.value}px);
             }`);
         }
+        function setBodyContent()
+        {
 
-        function onChange()
-        {
-            update();
-        }
-        
-        function update()
-        {
             if(inputsContentInput.checked == true)
             {
+                // html
                 browserMockup.innerHTML = htmlInput.value;
-                const tab = document.createElement('span');
-                tab.setAttribute('slot', 'tab');
-                tab.dataset.label = tabTitleInput.value;
-                tab.dataset.icon = tabIconSelect.value;
-                browserMockup.append(tab);
             }
 
-
-            stylesheet.replaceSync(cssInput.value);
-            stylesheet.insertRule(`browser-mockup
+            // tab
+            if(tab.children[1] != null)
             {
-                transform: rotateX(${tiltXInput.value}deg) rotateY(${tiltYInput.value}deg) rotateZ(${tiltZInput.value}deg) scale(${scaleInput.value});
-            }`);
+                tab.children[1].textContent = tabTitleInput.value;
+            }
+            if(tab.children[0] != null)
+            {
+                tab.children[0].textContent = tabIconSelect.value;
+            }
+            browserMockup.prepend(tab);
+
+            if(inputsContentInput.checked == true)
+            {
+                // css
+                stylesheet.replaceSync(cssInput.value);
+                stylesheet.insertRule(`browser-mockup
+                {
+                    transform: rotateX(${tiltXInput.value}deg) rotateY(${tiltYInput.value}deg) rotateZ(${tiltZInput.value}deg) scale(${scaleInput.value})
+                    translateX(${xPositionInput.value}px) translateY(${yPositionInput.value}px) translateZ(${zPositionInput.value}px);
+                }`);
+            }
+        }
+
+        function setMockUrl()
+        {
+            browserMockup.setAttribute('url', mockUrlInput.value);
+        }
+
+        function updateDisplay()
+        {
 
             if(actions_WindowsInput.checked == true)
             {
@@ -330,17 +405,21 @@ main
                 browserMockup.classList.remove('macos');
             }
 
+            // css
+            stylesheet.replaceSync(cssInput.value);
+            stylesheet.insertRule(`browser-mockup
+            {
+                transform: rotateX(${tiltXInput.value}deg) rotateY(${tiltYInput.value}deg) rotateZ(${tiltZInput.value}deg) scale(${scaleInput.value})
+                translateX(${xPositionInput.value}px) translateY(${yPositionInput.value}px) translateZ(${zPositionInput.value}px);
+            }`);
         }
-        const stylesheet = new CSSStyleSheet();
-        document.adoptedStyleSheets.push(stylesheet);
-
-        update();
 
         // target fullscreen to layout instead of full document
         document.addEventListener("keydown", function(e) 
         {
             // if code is F11 and document is fullscreen, then request, else cancel
             if(e.code == "F11") { !document.fullscreenElement && layout.requestFullscreen() || layout.cancelFullScreen(); }
+            if(e.code == "Space" && document.querySelector('input:focus,textarea:focus,select:focus') == null) { browserMockup.classList.remove('animate'); requestAnimationFrame(() => browserMockup.classList.add('animate')); }
         });
     </script>
 </body>
