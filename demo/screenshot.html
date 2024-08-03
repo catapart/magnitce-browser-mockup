@@ -96,6 +96,17 @@
             min-height: 400px;
             white-space: nowrap;
         }
+
+        #fullscreen
+        {
+            position: absolute;
+            top: 1em;
+            right: 1em;
+        }
+        .background:fullscreen #fullscreen
+        {
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -252,6 +263,7 @@ main
     </div>
     <div class="background">
         <browser-mockup></browser-mockup>
+        <button type="button" id="fullscreen">Enter Fullscreen</button>
     </div>
     <script type="module" src="../vanilla/browser-mockup.js"></script>
     <script type="module">
@@ -282,6 +294,7 @@ main
         const actions_NoneInput = document.getElementById('actions-none');
         const actions_WindowsInput = document.getElementById('actions-windows');
         const actions_MacOSInput = document.getElementById('actions-macos');
+        const fullscreenButton = document.getElementById('fullscreen');
 
         urlContentInput.addEventListener('change', updateDisplay);
         inputsContentInput.addEventListener('change', updateDisplay);
@@ -308,6 +321,7 @@ main
         actions_NoneInput.addEventListener('input', updateDisplay);
         actions_WindowsInput.addEventListener('input', updateDisplay);
         actions_MacOSInput.addEventListener('input', updateDisplay);
+        fullscreenButton.addEventListener('click', () => layout.requestFullscreen());
 
         
         const tab = document.createElement('span');
@@ -414,12 +428,13 @@ main
             }`);
         }
 
-        // target fullscreen to layout instead of full document
+        // refresh animations
         document.addEventListener("keydown", function(e) 
         {
-            // if code is F11 and document is fullscreen, then request, else cancel
-            if(e.code == "F11") { !document.fullscreenElement && layout.requestFullscreen() || layout.cancelFullScreen(); }
-            if(e.code == "Space" && document.querySelector('input:focus,textarea:focus,select:focus') == null) { browserMockup.classList.remove('animate'); requestAnimationFrame(() => browserMockup.classList.add('animate')); }
+            if(e.code == "Space" && document.querySelector('input:focus,textarea:focus,select:focus') == null)
+            { 
+                browserMockup.classList.remove('animate'); requestAnimationFrame(() => browserMockup.classList.add('animate'));
+            }
         });
     </script>
 </body>
