@@ -1,5 +1,16 @@
 # @magnit-ce/browser-mockup
 
+## 1.0.0
+
+### Major Changes
+
+- 14afaae: Release Version
+
+### Patch Changes
+
+- 66a7e81: refactored fullscreen for screenshot utility
+- b954a07: added basic docs
+
 ## 0.1.0
 
 ### Minor Changes
