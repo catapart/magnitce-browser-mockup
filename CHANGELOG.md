@@ -1,5 +1,11 @@
 # @magnit-ce/browser-mockup
 
+## 1.1.0
+
+### Minor Changes
+
+- ef894cd: wider support and history management
+
 ## 1.0.0
 
 ### Major Changes
