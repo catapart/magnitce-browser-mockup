@@ -25,150 +25,146 @@ var browser_mockup_default = `:host\r
     isolation: isolate;\r
     margin: var(--margin);\r
     box-shadow: var(--box-shadow);\r
+}\r
 \r
-    [part="header"]\r
-    {\r
-        display: grid;\r
-        grid-template-columns: auto 1fr auto;\r
-        grid-template-rows: auto auto;\r
-        background: var(--header-background);\r
-        color: var(--header-font-color);\r
-    }\r
+[part="header"]\r
+{\r
+    display: grid;\r
+    grid-template-columns: auto 1fr auto;\r
+    grid-template-rows: auto auto;\r
+    background: var(--header-background);\r
+    color: var(--header-font-color);\r
+}\r
 \r
-    [part="header"]::before\r
-    {\r
-        content: '\u2630';\r
-        display: inline-flex;\r
-        align-items: center;\r
-        justify-content: center;\r
-        padding: 0 7px;\r
-    }\r
+[part="header"]::before\r
+{\r
+    content: '\u2630';\r
+    display: inline-flex;\r
+    align-items: center;\r
+    justify-content: center;\r
+    padding: 0 7px;\r
+}\r
 \r
-    [part="tabs"]\r
-    {\r
-        padding-top: 7px;\r
-        gap: 1px;\r
-        display: flex;\r
-        overflow-x: auto;\r
-    }\r
+[part="tabs"]\r
+{\r
+    padding-top: 7px;\r
+    gap: 1px;\r
+    display: flex;\r
+    overflow-x: auto;\r
+}\r
 \r
-    [part="tabs"] :not(slot)\r
-    ,[part="tabs"] ::slotted(*)\r
-    {\r
-        font-size: 12px;\r
-        font-family: sans-serif;\r
-        background: var(--tab-background);\r
-        padding: 5px 1.2em;\r
-        user-select: none;\r
-        display: flex;\r
-        align-items: center;\r
-        gap: 7px;\r
-        flex-wrap: nowrap;\r
-        white-space: nowrap;\r
-    }\r
-    [part="tabs"] > .selected\r
-    ,[part="tabs"] > ::slotted(.selected)\r
-    {\r
-        border-top: solid 1px var(--tab-highlight);\r
-        background: var(--tab-selected-background);\r
-        color: var(--tab-selected-font-color);\r
-    }\r
-    [part="tabs"] [data-type="tab"]\r
-    ,[part="tabs"] ::slotted([data-type="tab"])\r
-    {\r
-        order: 1;\r
-    }\r
-    [part="tabs"] [data-type="collapsed-tab"]\r
-    ,[part="tabs"] ::slotted([data-type="collapsed-tab"])\r
-    {\r
-        order: 2;\r
-    }\r
+[part="tabs"] :not(slot)\r
+,[part="tabs"] ::slotted(*)\r
+{\r
+    font-size: 12px;\r
+    font-family: sans-serif;\r
+    background: var(--tab-background);\r
+    padding: 5px 1.2em;\r
+    user-select: none;\r
+    display: flex;\r
+    align-items: center;\r
+    gap: 7px;\r
+    flex-wrap: nowrap;\r
+    white-space: nowrap;\r
+}\r
+[part="tabs"] > .selected\r
+,[part="tabs"] > ::slotted(.selected)\r
+{\r
+    border-top: solid 1px var(--tab-highlight);\r
+    background: var(--tab-selected-background);\r
+    color: var(--tab-selected-font-color);\r
+}\r
+[part="tabs"] [data-type="tab"]\r
+,[part="tabs"] ::slotted([data-type="tab"])\r
+{\r
+    order: 1;\r
+}\r
+[part="tabs"] [data-type="collapsed-tab"]\r
+,[part="tabs"] ::slotted([data-type="collapsed-tab"])\r
+{\r
+    order: 2;\r
+}\r
 \r
-    [part="navigation"]\r
-    {\r
-        grid-column: span 3;\r
-        display: flex;\r
-        background: var(--tab-selected-background);\r
-    }\r
-    \r
-    [part="history"]\r
-    {\r
-        display: flex;\r
-        align-items: center;\r
-        padding: 3px 5px;\r
-        gap: 7px;\r
-    }\r
-    [part="history"] span\r
-    {\r
-        border-radius: 50%;\r
-        width: 16px;\r
-        height: 16px;\r
-        padding: 5px;\r
-        display: flex;\r
-        align-items: center;\r
-        justify-content: center;\r
-        line-height: 5px;\r
-        user-select: none;\r
-    }\r
-    [part="history"] span:hover\r
-    {\r
-        background-color: rgb(0 0 0 / .5);\r
-    }\r
-    [part="history"] [part="button-back"]\r
-    {\r
-        transform: scaleX(-1);\r
-    }\r
-    [part="history"] [part="button-forward"]\r
-    {\r
-        \r
-    }\r
-    [part="history"] [part="button-refresh"]\r
-    {\r
-        rotate: 100deg;\r
-    }\r
+[part="navigation"]\r
+{\r
+    grid-column: span 3;\r
+    display: flex;\r
+    background: var(--tab-selected-background);\r
+}\r
 \r
-    [part="url"]\r
-    {\r
-        flex: 1;\r
-        display: flex;\r
-        overflow: hidden;\r
-        padding: 3px;\r
-    }\r
+[part="history"]\r
+{\r
+    display: flex;\r
+    align-items: center;\r
+    padding: 3px 5px;\r
+    gap: 7px;\r
+}\r
+[part="history"] span\r
+{\r
+    border-radius: 50%;\r
+    width: 16px;\r
+    height: 16px;\r
+    padding: 5px;\r
+    display: flex;\r
+    align-items: center;\r
+    justify-content: center;\r
+    line-height: 5px;\r
+    user-select: none;\r
+}\r
+[part="history"] span:hover\r
+{\r
+    background-color: rgb(0 0 0 / .5);\r
+}\r
+[part="history"] [part="button-back"]\r
+{\r
+    transform: scaleX(-1);\r
+}\r
+[part="history"] [part="button-refresh"]\r
+{\r
+    rotate: 100deg;\r
+}\r
 \r
-    [part="path"]\r
-    {\r
-        flex: 1;\r
-        font-family: sans-serif;\r
-        font-size: 12px;\r
-        padding: 7px 15px;\r
-        background-color: var(--url-color);\r
-        border-radius: 30px;\r
-        box-shadow: inset 0 0 2px 1px rgba(0 0 0 / .6);\r
-        white-space: nowrap;\r
-        text-overflow: ellipsis;\r
-        overflow: hidden;\r
-    }\r
+[part="url"]\r
+{\r
+    flex: 1;\r
+    display: flex;\r
+    overflow: hidden;\r
+    padding: 3px;\r
+}\r
 \r
-    [part="body"]\r
-    {\r
-        all: initial;\r
+[part="path"]\r
+{\r
+    flex: 1;\r
+    font-family: sans-serif;\r
+    font-size: 12px;\r
+    padding: 7px 15px;\r
+    background-color: var(--url-color);\r
+    border-radius: 30px;\r
+    box-shadow: inset 0 0 2px 1px rgba(0 0 0 / .6);\r
+    white-space: nowrap;\r
+    text-overflow: ellipsis;\r
+    overflow: hidden;\r
+}\r
 \r
-        /* overflow set to mimic browser default overflow */\r
-        overflow: auto;\r
-        /* bg color set to canvas to mimic window bg color */\r
-        background-color: canvas;\r
-        /* color set to canvastext to mimic window color */\r
-        color: canvastext;\r
-        /* allow for color schemes */\r
-        color-scheme: light dark;\r
-        /* margin set to 8px to mimic default body property */\r
-        margin: 8px;\r
-    }\r
+[part="body"]\r
+{\r
+    all: initial;\r
 \r
-    [part="actions"]\r
-    {\r
-        display: none;\r
-    }\r
+    /* overflow set to mimic browser default overflow */\r
+    overflow: auto;\r
+    /* bg color set to canvas to mimic window bg color */\r
+    background-color: canvas;\r
+    /* color set to canvastext to mimic window color */\r
+    color: canvastext;\r
+    /* allow for color schemes */\r
+    color-scheme: light dark;\r
+    /* margin set to 8px to mimic default body property */\r
+    margin: 8px;\r
+}\r
+\r
+[part="actions"]\r
+{\r
+    display: none;\r
 }\r
 \r
 @media (prefers-color-scheme: dark)\r
@@ -181,72 +177,66 @@ var browser_mockup_default = `:host\r
     \r
 }\r
 \r
-:host(.windows)\r
+:host(.windows) [part="actions"]\r
 {\r
-    [part="actions"]\r
-    {\r
-        display: flex;\r
-    }\r
-\r
-    [part="actions"] span\r
-    {\r
-        padding: 0 7px;\r
-        font-size: 12px;\r
-        line-height: 10px;\r
-        display: flex;\r
-        align-items: center;\r
-    }\r
-\r
-    [part="action-minimize"]::before\r
-    {\r
-        content: '\u{1F5D5}';\r
-    }\r
-    [part="action-maximize"]::before\r
-    {\r
-        content: '\u{1F5D6}';\r
-    }\r
-    [part="action-close"]::before\r
-    {\r
-        content: '\u{1F5D9}';\r
-    }\r
+    display: flex;\r
 }\r
 \r
-:host(.macos)\r
+:host(.windows) [part="actions"] span\r
 {\r
-    [part="header"]::before\r
-    {\r
-        grid-column: 3;\r
-        grid-row: 1;\r
-    }\r
+    padding: 0 7px;\r
+    font-size: 12px;\r
+    line-height: 10px;\r
+    display: flex;\r
+    align-items: center;\r
+}\r
 \r
-    [part="actions"]\r
-    {\r
-        display: flex;\r
-        align-items: center;\r
-        gap: 7px;\r
-        padding: 0 7px;\r
-        grid-column: 1;\r
-        grid-row: 1;\r
-    }\r
-    [part="actions"] span\r
-    {\r
-        display: block;\r
-        width: 7px;\r
-        height: 7px;\r
-        border-radius: 50%;\r
-    }\r
-    [part="action-minimize"]\r
-    {\r
-        background-color: #00CA4E;\r
-    }\r
-    [part="action-maximize"]\r
-    {\r
-        background-color: #FFBD44;\r
-    }\r
-    [part="action-close"]\r
-    {\r
-        background-color: #FF605C;\r
-    }\r
+:host(.windows) [part="action-minimize"]::before\r
+{\r
+    content: '\u{1F5D5}';\r
+}\r
+:host(.windows) [part="action-maximize"]::before\r
+{\r
+    content: '\u{1F5D6}';\r
+}\r
+:host(.windows) [part="action-close"]::before\r
+{\r
+    content: '\u{1F5D9}';\r
+}\r
+\r
+:host(.macos) [part="header"]::before\r
+{\r
+    grid-column: 3;\r
+    grid-row: 1;\r
+}\r
+\r
+:host(.macos) [part="actions"]\r
+{\r
+    display: flex;\r
+    align-items: center;\r
+    gap: 7px;\r
+    padding: 0 7px;\r
+    grid-column: 1;\r
+    grid-row: 1;\r
+}\r
+:host(.macos) [part="actions"] span\r
+{\r
+    display: block;\r
+    width: 7px;\r
+    height: 7px;\r
+    border-radius: 50%;\r
+}\r
+:host(.macos) [part="action-minimize"]\r
+{\r
+    background-color: #00CA4E;\r
+}\r
+:host(.macos) [part="action-maximize"]\r
+{\r
+    background-color: #FFBD44;\r
+}\r
+:host(.macos) [part="action-close"]\r
+{\r
+    background-color: #FF605C;\r
 }`;
 
 // browser-mockup.html?raw

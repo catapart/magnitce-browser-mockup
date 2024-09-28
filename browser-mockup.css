@@ -24,146 +24,146 @@
     isolation: isolate;
     margin: var(--margin);
     box-shadow: var(--box-shadow);
+}
 
-    [part="header"]
-    {
-        display: grid;
-        grid-template-columns: auto 1fr auto;
-        grid-template-rows: auto auto;
-        background: var(--header-background);
-        color: var(--header-font-color);
-    }
+[part="header"]
+{
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    grid-template-rows: auto auto;
+    background: var(--header-background);
+    color: var(--header-font-color);
+}
 
-    [part="header"]::before
-    {
-        content: '☰';
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        padding: 0 7px;
-    }
+[part="header"]::before
+{
+    content: '☰';
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 7px;
+}
 
-    [part="tabs"]
-    {
-        padding-top: 7px;
-        gap: 1px;
-        display: flex;
-        overflow-x: auto;
-    }
+[part="tabs"]
+{
+    padding-top: 7px;
+    gap: 1px;
+    display: flex;
+    overflow-x: auto;
+}
 
-    [part="tabs"] :not(slot)
-    ,[part="tabs"] ::slotted(*)
-    {
-        font-size: 12px;
-        font-family: sans-serif;
-        background: var(--tab-background);
-        padding: 5px 1.2em;
-        user-select: none;
-        display: flex;
-        align-items: center;
-        gap: 7px;
-        flex-wrap: nowrap;
-        white-space: nowrap;
-    }
-    [part="tabs"] > .selected
-    ,[part="tabs"] > ::slotted(.selected)
-    {
-        border-top: solid 1px var(--tab-highlight);
-        background: var(--tab-selected-background);
-        color: var(--tab-selected-font-color);
-    }
-    [part="tabs"] [data-type="tab"]
-    ,[part="tabs"] ::slotted([data-type="tab"])
-    {
-        order: 1;
-    }
-    [part="tabs"] [data-type="collapsed-tab"]
-    ,[part="tabs"] ::slotted([data-type="collapsed-tab"])
-    {
-        order: 2;
-    }
+[part="tabs"] :not(slot)
+,[part="tabs"] ::slotted(*)
+{
+    font-size: 12px;
+    font-family: sans-serif;
+    background: var(--tab-background);
+    padding: 5px 1.2em;
+    user-select: none;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+}
+[part="tabs"] > .selected
+,[part="tabs"] > ::slotted(.selected)
+{
+    border-top: solid 1px var(--tab-highlight);
+    background: var(--tab-selected-background);
+    color: var(--tab-selected-font-color);
+}
+[part="tabs"] [data-type="tab"]
+,[part="tabs"] ::slotted([data-type="tab"])
+{
+    order: 1;
+}
+[part="tabs"] [data-type="collapsed-tab"]
+,[part="tabs"] ::slotted([data-type="collapsed-tab"])
+{
+    order: 2;
+}
 
-    [part="navigation"]
-    {
-        grid-column: span 3;
-        display: flex;
-        background: var(--tab-selected-background);
-    }
-    
-    [part="history"]
-    {
-        display: flex;
-        align-items: center;
-        padding: 3px 5px;
-        gap: 7px;
-    }
-    [part="history"] span
-    {
-        border-radius: 50%;
-        width: 16px;
-        height: 16px;
-        padding: 5px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        line-height: 5px;
-        user-select: none;
-    }
-    [part="history"] span:hover
-    {
-        background-color: rgb(0 0 0 / .5);
-    }
-    [part="history"] [part="button-back"]
-    {
-        transform: scaleX(-1);
-    }
-    [part="history"] [part="button-refresh"]
-    {
-        rotate: 100deg;
-    }
+[part="navigation"]
+{
+    grid-column: span 3;
+    display: flex;
+    background: var(--tab-selected-background);
+}
 
-    [part="url"]
-    {
-        flex: 1;
-        display: flex;
-        overflow: hidden;
-        padding: 3px;
-    }
+[part="history"]
+{
+    display: flex;
+    align-items: center;
+    padding: 3px 5px;
+    gap: 7px;
+}
+[part="history"] span
+{
+    border-radius: 50%;
+    width: 16px;
+    height: 16px;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 5px;
+    user-select: none;
+}
+[part="history"] span:hover
+{
+    background-color: rgb(0 0 0 / .5);
+}
+[part="history"] [part="button-back"]
+{
+    transform: scaleX(-1);
+}
+[part="history"] [part="button-refresh"]
+{
+    rotate: 100deg;
+}
 
-    [part="path"]
-    {
-        flex: 1;
-        font-family: sans-serif;
-        font-size: 12px;
-        padding: 7px 15px;
-        background-color: var(--url-color);
-        border-radius: 30px;
-        box-shadow: inset 0 0 2px 1px rgba(0 0 0 / .6);
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        overflow: hidden;
-    }
+[part="url"]
+{
+    flex: 1;
+    display: flex;
+    overflow: hidden;
+    padding: 3px;
+}
 
-    [part="body"]
-    {
-        all: initial;
+[part="path"]
+{
+    flex: 1;
+    font-family: sans-serif;
+    font-size: 12px;
+    padding: 7px 15px;
+    background-color: var(--url-color);
+    border-radius: 30px;
+    box-shadow: inset 0 0 2px 1px rgba(0 0 0 / .6);
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
 
-        /* overflow set to mimic browser default overflow */
-        overflow: auto;
-        /* bg color set to canvas to mimic window bg color */
-        background-color: canvas;
-        /* color set to canvastext to mimic window color */
-        color: canvastext;
-        /* allow for color schemes */
-        color-scheme: light dark;
-        /* margin set to 8px to mimic default body property */
-        margin: 8px;
-    }
+[part="body"]
+{
+    all: initial;
 
-    [part="actions"]
-    {
-        display: none;
-    }
+    /* overflow set to mimic browser default overflow */
+    overflow: auto;
+    /* bg color set to canvas to mimic window bg color */
+    background-color: canvas;
+    /* color set to canvastext to mimic window color */
+    color: canvastext;
+    /* allow for color schemes */
+    color-scheme: light dark;
+    /* margin set to 8px to mimic default body property */
+    margin: 8px;
+}
+
+[part="actions"]
+{
+    display: none;
 }
 
 @media (prefers-color-scheme: dark)
@@ -176,70 +176,64 @@
     
 }
 
-:host(.windows)
+:host(.windows) [part="actions"]
 {
-    [part="actions"]
-    {
-        display: flex;
-    }
-
-    [part="actions"] span
-    {
-        padding: 0 7px;
-        font-size: 12px;
-        line-height: 10px;
-        display: flex;
-        align-items: center;
-    }
-
-    [part="action-minimize"]::before
-    {
-        content: '🗕';
-    }
-    [part="action-maximize"]::before
-    {
-        content: '🗖';
-    }
-    [part="action-close"]::before
-    {
-        content: '🗙';
-    }
+    display: flex;
 }
 
-:host(.macos)
+:host(.windows) [part="actions"] span
 {
-    [part="header"]::before
-    {
-        grid-column: 3;
-        grid-row: 1;
-    }
+    padding: 0 7px;
+    font-size: 12px;
+    line-height: 10px;
+    display: flex;
+    align-items: center;
+}
 
-    [part="actions"]
-    {
-        display: flex;
-        align-items: center;
-        gap: 7px;
-        padding: 0 7px;
-        grid-column: 1;
-        grid-row: 1;
-    }
-    [part="actions"] span
-    {
-        display: block;
-        width: 7px;
-        height: 7px;
-        border-radius: 50%;
-    }
-    [part="action-minimize"]
-    {
-        background-color: #00CA4E;
-    }
-    [part="action-maximize"]
-    {
-        background-color: #FFBD44;
-    }
-    [part="action-close"]
-    {
-        background-color: #FF605C;
-    }
+:host(.windows) [part="action-minimize"]::before
+{
+    content: '🗕';
+}
+:host(.windows) [part="action-maximize"]::before
+{
+    content: '🗖';
+}
+:host(.windows) [part="action-close"]::before
+{
+    content: '🗙';
+}
+
+:host(.macos) [part="header"]::before
+{
+    grid-column: 3;
+    grid-row: 1;
+}
+
+:host(.macos) [part="actions"]
+{
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 0 7px;
+    grid-column: 1;
+    grid-row: 1;
+}
+:host(.macos) [part="actions"] span
+{
+    display: block;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+}
+:host(.macos) [part="action-minimize"]
+{
+    background-color: #00CA4E;
+}
+:host(.macos) [part="action-maximize"]
+{
+    background-color: #FFBD44;
+}
+:host(.macos) [part="action-close"]
+{
+    background-color: #FF605C;
 }
