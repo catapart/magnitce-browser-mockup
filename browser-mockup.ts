@@ -1,3 +1,4 @@
+import { BrowserMockupHistory } from './browser-mockup-history';
 import style from './browser-mockup.css?raw';
 import html from './browser-mockup.html?raw';
 
@@ -31,12 +32,28 @@ export class BrowserMockupComponent extends HTMLElement
     icons: string = structuredClone(ICONS);
     labels: string[] = structuredClone(LABELS);
 
+    history: BrowserMockupHistory;
+
     constructor()
     {
         super();
         this.attachShadow({mode: 'open'});
         this.shadowRoot!.innerHTML = html;
         this.shadowRoot!.adoptedStyleSheets.push(COMPONENT_STYLESHEET);
+
+        this.history = new BrowserMockupHistory(this);
+        
+        const backButton = this.shadowRoot!.querySelector('[part="button-back"]')!;
+        backButton.addEventListener('click', () =>
+        {
+            console.log('back');
+            this.history.back();
+        });
+        const forwardButton = this.shadowRoot!.querySelector('[part="button-forward"]')!;
+        forwardButton.addEventListener('click', () =>
+        {
+            this.history.forward();
+        });
     }
 
     #managedTabs: WeakSet<HTMLElement> = new WeakSet();
