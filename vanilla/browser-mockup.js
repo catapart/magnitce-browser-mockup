@@ -48,7 +48,7 @@ var BrowserMockupHistory = class {
    * by setting the mockup's url, and dispatching a 'popstate' event.
    */
   forward() {
-    if (this.index == this.items.length - 1) {
+    if (this.items.length == 0 || this.index == this.items.length - 1) {
       return;
     }
     this.index = Math.min(this.index + 1, this.items.length - 1);
@@ -330,7 +330,6 @@ var BrowserMockupComponent = class extends HTMLElement {
     this.history = new BrowserMockupHistory(this);
     const backButton = this.shadowRoot.querySelector('[part="button-back"]');
     backButton.addEventListener("click", () => {
-      console.log("back");
       this.history.back();
     });
     const forwardButton = this.shadowRoot.querySelector('[part="button-forward"]');

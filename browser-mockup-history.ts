@@ -62,7 +62,7 @@ export class BrowserMockupHistory
      */
     forward() 
     {
-        if(this.index == this.items.length-1) { return; }
+        if(this.items.length == 0 || this.index == this.items.length-1) { return; }
 
         this.index = Math.min(this.index + 1, this.items.length-1);
         this.mockup.setAttribute('url', this.items[this.index]);

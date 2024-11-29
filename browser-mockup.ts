@@ -46,7 +46,6 @@ export class BrowserMockupComponent extends HTMLElement
         const backButton = this.shadowRoot!.querySelector('[part="button-back"]')!;
         backButton.addEventListener('click', () =>
         {
-            console.log('back');
             this.history.back();
         });
         const forwardButton = this.shadowRoot!.querySelector('[part="button-forward"]')!;
