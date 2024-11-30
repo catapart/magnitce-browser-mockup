@@ -3,22 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Browser Mockup - Screenshot Utility</title>
+    <title>&lt;browser-mockup&gt; Screenshot Utility</title>
+    <link rel="stylesheet" href="./demo-page.css">
 
     <style>
-        html
-        {
-            color-scheme: light dark;
-        }
-
-        body
-        {
-            height: 100dvh;
-            display: grid;
-            grid-template-rows: auto auto 1fr;
-            grid-template-columns: auto 1fr;
-            gap: 1em;
-        }
 
         #description
         ,h1
@@ -30,6 +18,7 @@
         {
             overflow: hidden;
             perspective: 1000px;
+            min-height: 600px;
         }
 
         #wikipedia
@@ -94,7 +83,28 @@
         textarea
         {
             min-height: 400px;
-            white-space: nowrap;
+            white-space: pre-wrap;
+        }
+        
+        @media (max-width: 850px) 
+        {
+            #controls
+            {
+                flex-direction: column;
+            }
+            .textareas
+            {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto;
+            }
+            .textareas > label
+            {
+                grid-column: 1;
+            }
+            .display
+            {
+                order: -1;
+            }
         }
 
         #fullscreen
@@ -110,47 +120,57 @@
     </style>
 </head>
 <body>
-    <h1>&lt;browser-mockup&gt; - Screenshot Utility</h1>
-    <div id="description">
-        <p>This utility renders a public website, or any custom HTML into a browser mockup, and sets its display properties based on the controls below.</p>
-        <ul>
-            <li>Enter a url to load that url into an iframe on the mockup (page must be CORS compliant) [examples: <a id="wikipedia">https://www.wikipedia.org/</a>, <a id="google">https://www.google.com?igu=1</a>].</li>
-            <li>Render and style content directly, using the HTML and CSS inputs.</li>
-            <li>Set the controls and then use F11 to enter fullscreen mode.</li>
-            <li>Begin or restart animations by pressing spacebar.</li>
-            <li>Take a snapshot by pressing the print screen key.</li>
-            <li>To record an animation, use screen recording software like <a href="https://obsproject.com/" target="_blank">OBS</a>.</li>
-            <li>Style the background by using the ".background" selector.</li>
-        </ul>
-    </div>
-    <div id="controls">
-        <div class="sources">
-            <span class="form-field">
-                <label class="label">
-                    <input type="radio" name="content" value="url" id="url-content" />
-                    <span class="title">URL</span>
-                </label>
-                <input type="text" id="url" />
-            </span>
-            <div class="textareas">
-                <label>
-                    <input type="radio" name="content" value="inputs" id="inputs-content" checked />
-                    <span class="title">Direct Content</span>
-                </label>
+    <main class="centered-single-column">
+        <header class="full-width">
+            <div class="content centered-single-column">
+                <h1>The <code>browser-mockup</code> screenshot utility</h1>
+            </div>
+        </header>
+        <article>
+            <p>This utility renders a public website, or any custom HTML into a browser mockup, and sets its display properties based on the controls below.</p>
+            <ul>
+                <li>Enter a url to load that url into an iframe on the mockup (page must be CORS compliant) [examples: <a id="wikipedia">https://www.wikipedia.org/</a>, <a id="google">https://www.google.com?igu=1</a>].</li>
+                <li>Render and style content directly, using the HTML and CSS inputs.</li>
+                <li>Set the controls and then use F11 to enter fullscreen mode.</li>
+                <li>Begin or restart animations by pressing spacebar.</li>
+                <li>Take a snapshot by pressing the print screen key.</li>
+                <li>To record an animation, use screen recording software like <a href="https://obsproject.com/" target="_blank">OBS</a>.</li>
+                <li>Style the background by using the ".background" selector.</li>
+            </ul>
+        </article>
+        <div class="background">
+            <browser-mockup></browser-mockup>
+            <button type="button" id="fullscreen">Enter Fullscreen</button>
+        </div>
+        
+        <article id="controls">
+            <div class="sources">
                 <span class="form-field">
-                    <span class="label">HTML</span>
-                    <textarea id="html" class="value">
+                    <label class="label">
+                        <input type="radio" name="content" value="url" id="url-content" />
+                        <span class="title">URL</span>
+                    </label>
+                    <input type="text" id="url" />
+                </span>
+                <div class="textareas">
+                    <label>
+                        <input type="radio" name="content" value="inputs" id="inputs-content" checked />
+                        <span class="title">Direct Content</span>
+                    </label>
+                    <span class="form-field">
+                        <span class="label">HTML</span>
+                        <textarea id="html" class="value">
 <main>
     <h1>Default Example</h1>
     <p>Any child html (that is not assigned a slot) will be rendered inside the mockup document.</p>
     <p>Assign an element's slot attribute to "tab" to render that child as a tab element.</p>
     <p>If a child element is assigned to the tab slot, and has a class of "selected" that tab will appear selected. If no tab has a "selected" class, the first tab will be assigned that class.</p>
 </main>
-                    </textarea>
-                </span>
-                <span class="form-field">
-                    <span class="label">CSS</span>
-                    <textarea id="css" class="value">
+                        </textarea>
+                    </span>
+                    <span class="form-field">
+                        <span class="label">CSS</span>
+                        <textarea id="css" class="value">
 .background
 {
     display: flex;
@@ -179,92 +199,89 @@ main
 {
     font-family: sans-serif;
 }
-                    </textarea>
+                        </textarea>
+                    </span>
+                </div>
+            </div>
+            <div class="display">
+                <span class="form-field">
+                    <span class="label">Tab Title</span>
+                    <input type="text" id="title" value="Example" />
+                </span>
+                <span class="form-field">
+                    <span class="label">Tab Icon</span>
+                    <select id="icon">
+                        <option value="♔">♔</option>
+                        <option value="♕">♕</option>
+                        <option value="♖">♖</option>
+                        <option value="♗">♗</option>
+                        <option value="♘">♘</option>
+                        <option value="♙">♙</option>
+                        <option value="♚">♚</option>
+                        <option value="♛">♛</option>
+                        <option value="♜">♜</option>
+                        <option value="♝">♝</option>
+                        <option value="♞">♞</option>
+                        <option value="♟">♟</option>
+                        <option value="♠">♠</option>
+                        <option value="♣">♣</option>
+                        <option value="♥">♥</option>
+                        <option value="♦">♦</option>
+                        <option value="♡">♡</option>
+                        <option value="♢">♢</option>
+                        <option value="♤">♤</option>
+                        <option value="♧">♧</option>
+                    </select>
+                </span>
+                <label class="form-field">
+                    <span class="label">Mock URL</span>
+                    <input type="text" id="mock-url" value="https://www.mywebsite.com" />
+                </label>
+                <span class="form-field">
+                    <span class="label">Tilt X</span>
+                    <input type="range" id="tilt-x" value="0" min="-90" max="90" step="1" />
+                    <button type="button" id="reset-x">Reset</button>
+                </span>
+                <span class="form-field">
+                    <span class="label">Tilt Y</span>
+                    <input type="range" id="tilt-y" value="0" min="-90" max="90" step="1" />
+                    <button type="button" id="reset-y">Reset</button>
+                </span>
+                <span class="form-field">
+                    <span class="label">Tilt Z</span>
+                    <input type="range" id="tilt-z" value="0" min="-180" max="180" step="1" />
+                    <button type="button" id="reset-z">Reset</button>
+                </span>
+                <span class="form-field">
+                    <span class="label">Scale</span>
+                    <input type="range" id="scale" value="1" min=".5" max="3" step=".1" />
+                    <button type="button" id="reset-scale">Reset</button>
+                </span>
+                <span class="form-field">
+                    <span class="label">Position</span>
+                    <span class="title">X</span><input type="range" id="x" value="1" min="-1000" max="1000" step="1" />
+                    <span class="title">Y</span><input type="range" id="y" value="1" min="-1000" max="1000" step="1" />
+                    <span class="title">Z</span><input type="range" id="z" value="1" min="-1000" max="1000" step="1" />
+                    <button type="button" id="reset-position">Reset</button>
+                </span>
+                <span class="form-field">
+                    <span class="label">Actions</span>
+                    <label>
+                        <input type="radio" id="actions-none" name="actions" value="" checked="true" />
+                        <span class="label">None</span>
+                    </label>
+                    <label>
+                        <input type="radio" id="actions-windows" name="actions" value="windows" />
+                        <span class="label">Windows</span>
+                    </label>
+                    <label>
+                        <input type="radio" id="actions-macos" name="actions" value="macos" />
+                        <span class="label">MacOS</span>
+                    </label>
                 </span>
             </div>
-        </div>
-        <div class="display">
-            <span class="form-field">
-                <span class="label">Tab Title</span>
-                <input type="text" id="title" value="Example" />
-            </span>
-            <span class="form-field">
-                <span class="label">Tab Icon</span>
-                <select id="icon">
-                    <option value="♔">♔</option>
-                    <option value="♕">♕</option>
-                    <option value="♖">♖</option>
-                    <option value="♗">♗</option>
-                    <option value="♘">♘</option>
-                    <option value="♙">♙</option>
-                    <option value="♚">♚</option>
-                    <option value="♛">♛</option>
-                    <option value="♜">♜</option>
-                    <option value="♝">♝</option>
-                    <option value="♞">♞</option>
-                    <option value="♟">♟</option>
-                    <option value="♠">♠</option>
-                    <option value="♣">♣</option>
-                    <option value="♥">♥</option>
-                    <option value="♦">♦</option>
-                    <option value="♡">♡</option>
-                    <option value="♢">♢</option>
-                    <option value="♤">♤</option>
-                    <option value="♧">♧</option>
-                </select>
-            </span>
-            <label class="form-field">
-                <span class="label">Mock URL</span>
-                <input type="text" id="mock-url" value="https://www.mywebsite.com" />
-            </label>
-            <span class="form-field">
-                <span class="label">Tilt X</span>
-                <input type="range" id="tilt-x" value="0" min="-90" max="90" step="1" />
-                <button type="button" id="reset-x">Reset</button>
-            </span>
-            <span class="form-field">
-                <span class="label">Tilt Y</span>
-                <input type="range" id="tilt-y" value="0" min="-90" max="90" step="1" />
-                <button type="button" id="reset-y">Reset</button>
-            </span>
-            <span class="form-field">
-                <span class="label">Tilt Z</span>
-                <input type="range" id="tilt-z" value="0" min="-180" max="180" step="1" />
-                <button type="button" id="reset-z">Reset</button>
-            </span>
-            <span class="form-field">
-                <span class="label">Scale</span>
-                <input type="range" id="scale" value="1" min=".5" max="3" step=".1" />
-                <button type="button" id="reset-scale">Reset</button>
-            </span>
-            <span class="form-field">
-                <span class="label">Position</span>
-                <span class="title">X</span><input type="range" id="x" value="1" min="-1000" max="1000" step="1" />
-                <span class="title">Y</span><input type="range" id="y" value="1" min="-1000" max="1000" step="1" />
-                <span class="title">Z</span><input type="range" id="z" value="1" min="-1000" max="1000" step="1" />
-                <button type="button" id="reset-position">Reset</button>
-            </span>
-            <span class="form-field">
-                <span class="label">Actions</span>
-                <label>
-                    <input type="radio" id="actions-none" name="actions" value="" checked="true" />
-                    <span class="label">None</span>
-                </label>
-                <label>
-                    <input type="radio" id="actions-windows" name="actions" value="windows" />
-                    <span class="label">Windows</span>
-                </label>
-                <label>
-                    <input type="radio" id="actions-macos" name="actions" value="macos" />
-                    <span class="label">MacOS</span>
-                </label>
-            </span>
-        </div>
-    </div>
-    <div class="background">
-        <browser-mockup></browser-mockup>
-        <button type="button" id="fullscreen">Enter Fullscreen</button>
-    </div>
+        </article>
+    </main>
     <script type="module" src="../vanilla/browser-mockup.js"></script>
     <script type="module">
         const urlContentInput = document.getElementById('url-content');
