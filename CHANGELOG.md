@@ -1,5 +1,11 @@
 # @magnit-ce/browser-mockup
 
+## 1.1.1
+
+### Patch Changes
+
+- 4d797d0: fixed forward button setting url to undefined
+
 ## 1.1.0
 
 ### Minor Changes
